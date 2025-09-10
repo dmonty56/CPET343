@@ -14,9 +14,9 @@ end full_adder_single_bit_struct;
 
 architecture struct of full_adder_single_bit_struct is
     
-    signal s1 : std_logic;
-    signal s2 : std_logic;
-    signal s3 : std_logic;
+    signal s1 : std_logic; -- a xor b to xor with sum
+    signal s2 : std_logic; -- (a xor b) and cin TO cout or
+    signal s3 : std_logic; -- (a and b) TO cout or
 
 begin
 
