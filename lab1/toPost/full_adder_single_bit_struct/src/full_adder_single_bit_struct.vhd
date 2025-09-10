@@ -27,4 +27,4 @@ begin
     sum <= s1 XOR cin;
     cout <= s2 OR s3;
 
-end architecture struct;
+end architecture struct; --hi its me a test
