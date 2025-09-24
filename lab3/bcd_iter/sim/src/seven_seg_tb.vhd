@@ -20,7 +20,7 @@ component seven_seg is
   );  
 end component; 
 
-signal output       : std_logic;
+signal otp : std_logic_vector(6 downto 0);
 constant period     : time := 20ns;                                              
 signal clk          : std_logic := '0';
 signal reset        : std_logic := '1';
@@ -61,6 +61,6 @@ uut: seven_seg
     clk            => clk,
     reset          => reset,
     bcd            => bcd,
-    seven_seg_out  => open
+    seven_seg_out  => otp
   );
 end arch;
