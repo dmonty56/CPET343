@@ -21,7 +21,7 @@ component counter is
 end component; 
 
 signal seven_seg_out : std_logic_vector(6 downto 0);
-constant period     : time := 20ns;                                              
+constant period     : time := 20 ns;                                              
 signal clk          : std_logic := '0';
 signal reset        : std_logic := '1';
 signal bcd          : std_logic_vector(3 downto 0) := "0000";
@@ -29,17 +29,16 @@ signal bcd          : std_logic_vector(3 downto 0) := "0000";
 begin
 
 -- bcd iteration
---sequential_tb : process 
---    begin
---      report "****************** sequential testbench start ****************";
---      wait for 80 ns;   -- let all the initial conditions trickle through
---      for i in 0 to 9 loop
---        bcd <= std_logic_vector(unsigned(bcd) + 1 );
---        wait for 40 ns;
---      end loop;
---      report "****************** sequential testbench stop ****************";
---      wait;
---  end process; 
+sequential_tb : process 
+    begin
+      report "****************** sequential testbench start ****************";
+      wait for 80 ns;   -- let all the initial conditions trickle through
+      for i in 0 to 19 loop
+        wait for 40 ns;
+      end loop;
+      report "****************** sequential testbench stop ****************";
+      wait;
+  end process; 
 
 -- clock process
 clock: process

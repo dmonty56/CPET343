@@ -18,9 +18,9 @@ architecture arch of counter is
         port (
             a       : in  std_logic_vector(bits-1 downto 0);
             b       : in  std_logic_vector(bits-1 downto 0);
-            cin : std_logic;
+            cin     : in std_logic;
             sum     : out std_logic_vector(bits-1 downto 0);
-            cout : std_logic
+            cout    : out std_logic
         );
     end component generic_adder_beh;
 
@@ -45,22 +45,21 @@ architecture arch of counter is
         );   
     end component seven_seg;
 
-    signal sum : std_logic_vector(3 downto 0);
+    signal sum : std_logic_vector(3 downto 0) := "0000";
     signal enable : std_logic;
     signal sum_sig : std_logic_vector(3 downto 0);
-    signal c_sig : std_logic;
 begin
 
     uut1 : generic_adder_beh
         generic map (
-            bits => 4
+            bits => 3
         )
         port map (
-            a => sum_sig,
-            b => "0001",
-            cin => c_sig,
-            sum => sum,
-            cout => c_sig
+            a => sum_sig(2 downto 0),
+            b => "001",
+            cin => sum_sig(3),
+            sum => sum(2 downto 0),
+            cout => sum(3)
         );
     uut2 : generic_counter
         generic map (
@@ -81,9 +80,13 @@ begin
 
     sum_register : process(clk,reset,enable)
         begin
-            if (reset = '0') then
-                if (clk'event and clk = '1') then
-                    if (enable = '1') then
+            if (reset = '1') then
+                sum_sig <= "0000";
+            elsif (clk'event and clk = '1') then
+                if (enable = '1') then
+                    if (sum = "1010") then
+                        sum_sig <= "0000";
+                    else
                         sum_sig <= sum;
                     end if;
                 end if;
