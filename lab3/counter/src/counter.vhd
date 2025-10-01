@@ -1,3 +1,6 @@
+-- top level counter entity
+-- by David Montgomery
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -52,18 +55,17 @@ begin
 
     uut1 : generic_adder_beh
         generic map (
-            bits => 3
+            bits => 4
         )
         port map (
-            a => sum_sig(2 downto 0),
-            b => "001",
-            cin => sum_sig(3),
-            sum => sum(2 downto 0),
-            cout => sum(3)
+            a => sum_sig,
+            b => "0001",
+            cin => '0',
+            sum => sum
         );
     uut2 : generic_counter
         generic map (
-            max_count => 3
+            max_count => 50000000
         )
         port map (
             clk => clk,
@@ -83,12 +85,10 @@ begin
             if (reset = '1') then
                 sum_sig <= "0000";
             elsif (clk'event and clk = '1') then
-                if (enable = '1') then
-                    if (sum = "1010") then
-                        sum_sig <= "0000";
-                    else
-                        sum_sig <= sum;
-                    end if;
+                if (sum = "1010") then
+                    sum_sig <= "0000";
+                elsif (enable = '1') then
+                    sum_sig <= sum;
                 end if;
             end if;
     end process sum_register;

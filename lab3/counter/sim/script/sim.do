@@ -7,4 +7,4 @@ vcom -93 -work work ../../src/counter.vhd
 vcom -93 -work work ../src/counter_tb.vhd
 vsim -voptargs=+acc counter_tb
 do wave.do
-run 500 ns
+run 3000 ns
