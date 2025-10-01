@@ -1,9 +1,13 @@
+# lab instructions
 *.pdf
+# modelsim compliation results
 *\work
 transcript*
 *.wlf
 *.vstf
 wlft?*
+# modelsim files in editor
+*.bak
+# quartus compilation results
 *\project
 *\output_files
-*.bak
