@@ -21,16 +21,18 @@ architecture top of add_sub is
     signal add_res, sub_res : std_logic_vector(3 downto 0); --signal results of both math possibilities
 begin
 
-    result : process( add_sub_sw, clk )
+    res : process(add_sub_sw)
     begin
-        if (rising_edge(clk)) then
-            if add_sub_sw = '1' then --add
-                result <= add_res;
-            elsif add_sub_sw = '0' then --subtract
-                result <= sub_res;
+        if (reset = '0') then        
+            if (rising_edge(clk)) then
+                if add_sub_sw = '1' then --add
+                    result <= add_res;
+                elsif add_sub_sw = '0' then --subtract
+                    result <= sub_res;
+                end if;
             end if;
         end if;
-    end process ; -- result
+    end process ; -- res
 
     --math
     add_res <= std_logic_vector(unsigned('0' & a) + unsigned('0' & b));
