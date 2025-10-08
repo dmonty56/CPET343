@@ -36,9 +36,11 @@ sequential_tb : process
             a <= std_logic_vector(unsigned(a) + 1);
             for k in 0 to 6 loop
                 b <= std_logic_vector(unsigned(b) +1);
+                wait for 10 ns;
             end loop;
-        end loop ;
-        wait for 1000 ns;
+            wait for 10 ns;
+        end loop;
+        wait for 100 ns;
       end loop;
       report "****************** sequential testbench stop ****************";
       wait;
