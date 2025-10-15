@@ -8,7 +8,7 @@ use ieee.std_logic_1164.all;
 
 entity top is
     port (
-        add_sub_sw : in std_logic;
+        add_sub_sw, clk, reset : in std_logic;
         a, b : in std_logic_vector(2 downto 0);
 
         result_out, a_out, b_out : out std_logic_vector(6 downto 0)
@@ -46,25 +46,30 @@ architecture arch of top is
         );
     end component seven_seg;
 
+    signal a_s_syn : std_logic; -- add/sub enable switch synchronized
+    signal a_syn, b_syn : std_logic_vector(2 downto 0); --synchronized a and b vectors
+    signal result : std_logic_vector(3 downto 0); --result vector
+    signal a_4bit, b_4bit : std_logic_vector(3 downto 0); --a and b after being converted to 4 bit vectors
+
 begin
 
     a_s : add_sub
         port map (
             reset => reset,
             clk => clk,
-            add_sub_sw => a_s_en,
+            add_sub_sw => a_s_syn,
             a => a_syn,
             b => b_syn,
             result => result
         );
 
-    a_s_res : rising_edge_synchronizer
-        port map (
-            clk => clk,
-            reset => reset,
-            input => add_sub_sw,
-            edge => a_s_en
-        );
+    --a_s_res : rising_edge_synchronizer
+    --    port map (
+    --        clk => clk,
+    --        reset => reset,
+    --        input => add_sub_sw,
+    --        edge => a_s_en
+    --    );
 
     result_bcd : seven_seg
         port map (
@@ -78,7 +83,7 @@ begin
         port map (
             clk => clk,
             reset => reset,
-            bcd => '0' & a_syn,
+            bcd => a_4bit,
             seven_seg_out => a_out
         );
 
@@ -86,7 +91,7 @@ begin
         port map (
             clk => clk,
             reset => reset,
-            bcd => '0' & b_syn,
+            bcd => b_4bit,
             seven_seg_out => b_out
         );
 
@@ -95,11 +100,11 @@ begin
         if (rising_edge(clk)) then
             a_syn <= a;
             b_syn <= b;
+            a_s_syn <= add_sub_sw;
         end if;
     end process ; -- a_sync
 
-    signal a_s_en : std_logic;
-    signal a_syn, b_syn : std_logic_vector(2 downto 0);
-    signal result : std_logic_vector(3 downto 0);
+    a_4bit <= '0' & a_syn;
+    b_4bit <= '0' & b_syn;
 
 end architecture ; -- arch
