@@ -46,7 +46,7 @@ architecture arch of top is
         );
     end component seven_seg;
 
-    signal a_s_en : std_logic; -- add/sub enable switch
+    signal a_s_syn : std_logic; -- add/sub enable switch synchronized
     signal a_syn, b_syn : std_logic_vector(2 downto 0); --synchronized a and b vectors
     signal result : std_logic_vector(3 downto 0); --result vector
     signal a_4bit, b_4bit : std_logic_vector(3 downto 0); --a and b after being converted to 4 bit vectors
@@ -57,19 +57,19 @@ begin
         port map (
             reset => reset,
             clk => clk,
-            add_sub_sw => a_s_en,
+            add_sub_sw => a_s_syn,
             a => a_syn,
             b => b_syn,
             result => result
         );
 
-    a_s_res : rising_edge_synchronizer
-        port map (
-            clk => clk,
-            reset => reset,
-            input => add_sub_sw,
-            edge => a_s_en
-        );
+    --a_s_res : rising_edge_synchronizer
+    --    port map (
+    --        clk => clk,
+    --        reset => reset,
+    --        input => add_sub_sw,
+    --        edge => a_s_en
+    --    );
 
     result_bcd : seven_seg
         port map (
@@ -100,6 +100,7 @@ begin
         if (rising_edge(clk)) then
             a_syn <= a;
             b_syn <= b;
+            a_s_syn <= add_sub_sw;
         end if;
     end process ; -- a_sync
 

@@ -21,7 +21,7 @@ architecture top of add_sub is
     signal add_res, sub_res : std_logic_vector(3 downto 0); --signal results of both math possibilities
 begin
 
-    res : process(add_sub_sw)
+    res : process(add_sub_sw, reset, a, b)
     begin
         if (reset = '0') then        
             if (rising_edge(clk)) then

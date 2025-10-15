@@ -7,4 +7,4 @@ vcom -93 -work work ../../src/top.vhd
 vcom -93 -work work ../src/add_sub_tb.vhd
 vsim -voptargs=+acc add_sub_tb
 do wave.do
-run 3000 ns
+run 1400 ns
