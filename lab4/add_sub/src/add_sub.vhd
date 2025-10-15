@@ -8,7 +8,7 @@ use ieee.numeric_std.all;
 
 entity add_sub is
     port (
-        reset, clk : in std_logic;
+        reset : in std_logic;
         add_sub_sw : in std_logic; --add = 1, sub = 0
         a, b : in std_logic_vector(2 downto 0);
 
@@ -19,17 +19,16 @@ end entity add_sub;
 architecture top of add_sub is
     
     signal add_res, sub_res : std_logic_vector(3 downto 0); --signal results of both math possibilities
+    
 begin
 
     res : process(add_sub_sw, reset, a, b)
     begin
-        if (reset = '0') then        
-            if (rising_edge(clk)) then
-                if add_sub_sw = '1' then --add
-                    result <= add_res;
-                elsif add_sub_sw = '0' then --subtract
-                    result <= sub_res;
-                end if;
+        if (reset = '0') then
+            if add_sub_sw = '1' then --add
+                result <= add_res;
+            elsif add_sub_sw = '0' then --subtract
+                result <= sub_res;
             end if;
         end if;
     end process ; -- res

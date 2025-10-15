@@ -18,13 +18,17 @@ add wave -noupdate /add_sub_tb/clk
 add wave -noupdate /add_sub_tb/reset
 add wave -noupdate /add_sub_tb/add_sub_sw
 add wave -noupdate /add_sub_tb/a
+add wave -noupdate /add_sub_tb/uut/a_syn
 add wave -noupdate /add_sub_tb/b
-add wave -noupdate /add_sub_tb/uut/result
+add wave -noupdate /add_sub_tb/uut/b_syn
+add wave -noupdate -radix unsigned /add_sub_tb/uut/a_s/add_res
+add wave -noupdate -radix unsigned /add_sub_tb/uut/a_s/sub_res
+add wave -noupdate /add_sub_tb/uut/the_result
 add wave -noupdate -radix States /add_sub_tb/a_o
 add wave -noupdate -radix States /add_sub_tb/b_o
 add wave -noupdate -radix States /add_sub_tb/r_o
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {785 ns} 0}
+WaveRestoreCursors {{Cursor 1} {1730 ns} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 177
 configure wave -valuecolwidth 58
@@ -40,4 +44,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {0 ns} {3150 ns}
+WaveRestoreZoom {0 ns} {634 ns}

@@ -32,13 +32,13 @@ sequential_tb : process
       wait for 80 ns;   -- let all the initial conditions trickle through
       for i in 0 to 1 loop
         add_sub_sw <= not add_sub_sw;
-        for j in 0 to 6 loop
+        for j in 0 to 7 loop
             a <= std_logic_vector(unsigned(a) + 1);
-            for k in 0 to 6 loop
+            for k in 0 to 7 loop
                 b <= std_logic_vector(unsigned(b) +1);
-                wait for 10 ns;
+                wait for 40 ns;
             end loop;
-            wait for 10 ns;
+            wait for 40 ns;
         end loop;
         wait for 100 ns;
       end loop;

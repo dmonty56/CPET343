@@ -19,7 +19,7 @@ architecture arch of top is
 
     component add_sub is
         port (
-            reset, clk : in std_logic;
+            reset : in std_logic;
             add_sub_sw : in std_logic; --add = 1, sub = 0
             a, b : in std_logic_vector(2 downto 0);
 
@@ -48,7 +48,7 @@ architecture arch of top is
 
     signal a_s_syn : std_logic; -- add/sub enable switch synchronized
     signal a_syn, b_syn : std_logic_vector(2 downto 0); --synchronized a and b vectors
-    signal result : std_logic_vector(3 downto 0); --result vector
+    signal the_result : std_logic_vector(3 downto 0); --result vector
     signal a_4bit, b_4bit : std_logic_vector(3 downto 0); --a and b after being converted to 4 bit vectors
 
 begin
@@ -56,11 +56,10 @@ begin
     a_s : add_sub
         port map (
             reset => reset,
-            clk => clk,
             add_sub_sw => a_s_syn,
             a => a_syn,
             b => b_syn,
-            result => result
+            result => the_result
         );
 
     --a_s_res : rising_edge_synchronizer
@@ -75,7 +74,7 @@ begin
         port map (
             clk => clk,
             reset => reset,
-            bcd => result,
+            bcd => the_result,
             seven_seg_out => result_out
         );
 
