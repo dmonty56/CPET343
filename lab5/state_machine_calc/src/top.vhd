@@ -6,7 +6,7 @@ entity top is
     port (
         clk : in std_logic;
         reset : in std_logic;
-        a, b : in std_logic_vector(7 downto 0);
+        a, b : in std_logic_vector(7 downto 0) := "00000000";
         btn : in std_logic;
 
         HEX_hun, HEX_ten, HEX_one : out std_logic_vector(6 downto 0)
@@ -23,14 +23,14 @@ architecture arch of top is
             hundreds                : out std_logic_vector(3 downto 0)
           );
     end component double_dabble;
-    component rising_edge_syncrhonizer is
+    component rising_edge_synchronizer is
         port (
             clk               : in std_logic;
             reset             : in std_logic;
             input             : in std_logic;
             edge              : out std_logic
           );
-    end component rising_edge_syncrhonizer;
+    end component rising_edge_synchronizer;
     component seven_seg is
         port (
             clk : in std_logic;
@@ -48,9 +48,9 @@ architecture arch of top is
 
     signal state_reg        : std_logic_vector(3 downto 0);
     signal state_next       : std_logic_vector(3 downto 0);
-    signal btn_sig          : std_logic;
+    signal btn_sig          : std_logic := '0';
     signal s_out            : std_logic_vector(11 downto 0);
-    signal add_res, sub_res : std_logic_vector(3 downto 0); -- signal results of both math possibilities
+    signal add_res, sub_res : std_logic_vector(8 downto 0); -- signal results of both math possibilities
     signal ones, tens, huns : std_logic_vector(3 downto 0); -- signals from double dabble to SSDs
 
 begin
@@ -84,20 +84,22 @@ begin
                 end if;
 
             when add =>                 -- sum a and b
-                s_out <= add_res;
+                s_out <= "000" & add_res;
                 if (btn_sig = '1') then
                     state_next <= sub;
                 end if;
 
             when sub =>                 -- diff a and b
-                s_out <= sub_res;
+                s_out <= "000" & sub_res;
                 if (btn_sig = '1') then
                     state_next <= in_a;
                 end if;
+            when others => 
+                null;
         end case;
     end process ; -- state_machine
 
-    btn_res : rising_edge_syncrhonizer
+    btn_res : rising_edge_synchronizer
         port map (
             clk => clk,
             reset => reset,
