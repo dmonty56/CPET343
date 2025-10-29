@@ -6,7 +6,7 @@ entity top is
     port (
         clk : in std_logic;
         reset : in std_logic;
-        a, b : in std_logic_vector(7 downto 0) := "00000000";
+        switch : in std_logic_vector(7 downto 0) := "00000000";
         btn : in std_logic;
 
         HEX_hun, HEX_ten, HEX_one : out std_logic_vector(6 downto 0)
@@ -52,13 +52,14 @@ architecture arch of top is
     signal s_out            : std_logic_vector(11 downto 0);
     signal add_res, sub_res : std_logic_vector(8 downto 0); -- signal results of both math possibilities
     signal ones, tens, huns : std_logic_vector(3 downto 0); -- signals from double dabble to SSDs
-    signal a_syn, b_syn : std_logic_vector(7 downto 0); --synchronized a and b vectors
+    signal switch_syn : std_logic_vector(7 downto 0); --synchronized switch vector
+    signal a, b : std_logic_vector(7 downto 0) := "00000000"; -- signal holding a and b values
 
 
 begin
     --math
-    add_res <= std_logic_vector(unsigned('0' & a_syn) + unsigned('0' & b_syn));
-    sub_res <= std_logic_vector(unsigned('0' & a_syn) - unsigned('0' & b_syn));
+    add_res <= std_logic_vector(unsigned('0' & a) + unsigned('0' & b));
+    sub_res <= std_logic_vector(unsigned('0' & a) - unsigned('0' & b));
     
     state_register : process( clk, reset )  
     begin
@@ -66,6 +67,8 @@ begin
             state_reg <= in_a;
         elsif (clk'event and clk = '1') then
             state_reg <= state_next;
+        else
+            state_reg <= in_a;
         end if;
     end process ; -- state_register
 
@@ -74,13 +77,15 @@ begin
         state_next <= state_reg;
         case (state_reg) is
             when in_a =>                -- input a
-                s_out <= "0000" & a_syn;
+                a <= switch_syn;
+                s_out <= "0000" & switch_syn;
                 if (btn_sig = '1') then
                     state_next <= in_b;
                 end if;
 
             when in_b =>                -- input b
-                s_out <= "0000" & b_syn;
+                b <= switch_syn;
+                s_out <= "0000" & switch_syn;
                 if (btn_sig = '1') then
                     state_next <= add;
                 end if;
@@ -101,11 +106,10 @@ begin
         end case;
     end process ; -- state_machine
 
-    synchronizer : process( a, b, clk )
+    synchronizer : process( switch, clk )
     begin
         if (rising_edge(clk)) then
-            a_syn <= a;
-            b_syn <= b;
+            switch_syn <= switch;
         end if;
     end process ; -- a_sync
 

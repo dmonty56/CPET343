@@ -23,12 +23,8 @@ radix define SSD {
 quietly WaveActivateNextPane {} 0
 add wave -noupdate /calc_tb/clk
 add wave -noupdate /calc_tb/reset
-add wave -noupdate -radix binary /calc_tb/a
-add wave -noupdate -radix binary /calc_tb/b
+add wave -noupdate -radix binary /calc_tb/switch
 add wave -noupdate /calc_tb/btn
-add wave -noupdate /calc_tb/uut/btn_res/input_z
-add wave -noupdate /calc_tb/uut/btn_res/input_zz
-add wave -noupdate /calc_tb/uut/btn_res/input_zzz
 add wave -noupdate /calc_tb/uut/btn_sig
 add wave -noupdate -radix SSD /calc_tb/HEX2
 add wave -noupdate -radix SSD /calc_tb/HEX1

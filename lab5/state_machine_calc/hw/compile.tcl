@@ -40,6 +40,7 @@ set_location_assignment PIN_AC9  -to switch[5]
 set_location_assignment PIN_AD10 -to switch[6]
 set_location_assignment PIN_AE12 -to switch[7]
 
+# HEX0
 set_location_assignment PIN_AE26 -to HEX_one[0]
 set_location_assignment PIN_AE27 -to HEX_one[1]
 set_location_assignment PIN_AE28 -to HEX_one[2]
@@ -48,6 +49,7 @@ set_location_assignment PIN_AF28 -to HEX_one[4]
 set_location_assignment PIN_AG28 -to HEX_one[5]
 set_location_assignment PIN_AH28 -to HEX_one[6]
 
+# HEX1
 set_location_assignment PIN_AJ29 -to HEX_ten[0]
 set_location_assignment PIN_AH29 -to HEX_ten[1]
 set_location_assignment PIN_AH30 -to HEX_ten[2]
@@ -56,6 +58,7 @@ set_location_assignment PIN_AF29 -to HEX_ten[4]
 set_location_assignment PIN_AF30 -to HEX_ten[5]
 set_location_assignment PIN_AD27 -to HEX_ten[6]
 
+# HEX2
 set_location_assignment PIN_AB23 -to HEX_hun[0]
 set_location_assignment PIN_AE29 -to HEX_hun[1]
 set_location_assignment PIN_AD29 -to HEX_hun[2]
@@ -64,6 +67,7 @@ set_location_assignment PIN_AD30 -to HEX_hun[4]
 set_location_assignment PIN_AC29 -to HEX_hun[5]
 set_location_assignment PIN_AC30 -to HEX_hun[6]
 
+# HEX3
 # set_location_assignment PIN_AD26 -to bcd_3[0]
 # set_location_assignment PIN_AC27 -to bcd_3[1]
 # set_location_assignment PIN_AD25 -to bcd_3[2]
@@ -72,6 +76,7 @@ set_location_assignment PIN_AC30 -to HEX_hun[6]
 # set_location_assignment PIN_AB25 -to bcd_3[5]
 # set_location_assignment PIN_AB22 -to bcd_3[6]
 
+# HEX4
 # set_location_assignment PIN_AA24 -to bcd_4[0]
 # set_location_assignment PIN_Y23  -to bcd_4[1]
 # set_location_assignment PIN_Y24  -to bcd_4[2]
@@ -80,6 +85,7 @@ set_location_assignment PIN_AC30 -to HEX_hun[6]
 # set_location_assignment PIN_V23  -to bcd_4[5]
 # set_location_assignment PIN_W25  -to bcd_4[6]
 
+# HEX5
 # set_location_assignment PIN_V25  -to bcd_5[0]
 # set_location_assignment PIN_AA28 -to bcd_5[1]
 # set_location_assignment PIN_Y27  -to bcd_5[2]
@@ -88,7 +94,8 @@ set_location_assignment PIN_AC30 -to HEX_hun[6]
 # set_location_assignment PIN_AA26 -to bcd_5[5]
 # set_location_assignment PIN_AA25 -to bcd_5[6]
 
-set_location_assignment PIN_AA14 -to btn
+# KEY0
+set_location_assignment PIN_AA14 -to btn 
 
 execute_flow -compile
 project_close
