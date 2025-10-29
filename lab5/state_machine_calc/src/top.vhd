@@ -49,7 +49,7 @@ architecture arch of top is
     signal state_reg        : std_logic_vector(3 downto 0);
     signal state_next       : std_logic_vector(3 downto 0);
     signal btn_sig          : std_logic := '0';
-    signal s_out            : std_logic_vector(11 downto 0);
+    signal s_out            : std_logic_vector(11 downto 0) := x"000";
     signal add_res, sub_res : std_logic_vector(8 downto 0); -- signal results of both math possibilities
     signal ones, tens, huns : std_logic_vector(3 downto 0); -- signals from double dabble to SSDs
     signal switch_syn : std_logic_vector(7 downto 0); --synchronized switch vector
@@ -67,12 +67,10 @@ begin
             state_reg <= in_a;
         elsif (clk'event and clk = '1') then
             state_reg <= state_next;
-        else
-            state_reg <= in_a;
         end if;
     end process ; -- state_register
 
-    state_machine : process( state_reg, btn_sig )
+    state_machine : process( switch_syn, state_reg, btn_sig )
     begin
         state_next <= state_reg;
         case (state_reg) is
@@ -102,7 +100,7 @@ begin
                     state_next <= in_a;
                 end if;
             when others => 
-                null;
+                state_next <= in_a;
         end case;
     end process ; -- state_machine
 

@@ -26,12 +26,13 @@ add wave -noupdate /calc_tb/reset
 add wave -noupdate -radix binary /calc_tb/switch
 add wave -noupdate /calc_tb/btn
 add wave -noupdate /calc_tb/uut/btn_sig
+add wave -noupdate -radix decimal /calc_tb/uut/s_out
 add wave -noupdate -radix SSD /calc_tb/HEX2
 add wave -noupdate -radix SSD /calc_tb/HEX1
 add wave -noupdate -radix SSD /calc_tb/HEX0
 add wave -noupdate -radix States /calc_tb/uut/state_reg
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {1887 ns} 0}
+WaveRestoreCursors {{Cursor 1} {104 ns} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 177
 configure wave -valuecolwidth 69
@@ -47,4 +48,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {0 ns} {6300 ns}
+WaveRestoreZoom {0 ns} {958 ns}

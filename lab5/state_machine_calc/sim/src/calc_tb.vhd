@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use std.textio.all;
 
 entity calc_tb is
 end entity calc_tb;
@@ -19,26 +20,16 @@ architecture arch of calc_tb is
 	end component top;
 
 	constant period : time := 20 ns;
-	constant wait_time : time := 40 ns;
+	constant wait_time : time := 200 ns;
     signal clk : std_logic := '0';
     signal reset : std_logic := '1';
     signal switch : std_logic_vector(7 downto 0) := "00000000";
     signal btn : std_logic := '0';
     signal HEX0, HEX1, HEX2 : std_logic_vector(6 downto 0) := "0000000";
 
-	--procedure press_button (
-	--	signal btn : out std_logic
-	--	) is
-	--begin
-	--	btn <= '1';
-	--	wait for 15 ns;
-	--	btn <= '0';
-	--end press_button;
+    --file tests : text;
 
 	
-
-	
-
 begin 
 
 	-- iteration
@@ -63,26 +54,95 @@ begin
 		--	press_button; -- back to in_a
 		--	wait for wait_time;
 		--end test_case;
+
+		procedure press_button (
+			signal btn : out std_logic
+			) is
+		begin
+			btn <= '1';
+			wait for 15 ns;
+			btn <= '0';
+		end press_button;
+
+		--variable line_in : line;
+		--variable a, b : bit_vector(7 downto 0);
+
     begin
         report "****************** sequential testbench start ****************";
+        --file_open(tests,"test_input.txt",READ_MODE);
         wait for 80 ns;   -- let all the initial conditions trickle through
-        --for i in 0 to 4 loop
-        --    --bcd <= std_logic_vector(unsigned(bcd) + 1 );
-        --    --wait for 40 ns;
-        --    btn <= not btn;
-        --    switch <= std_logic_vector(unsigned(switch) + 1 );
-        --    wait for 15 ns;
-        --    btn <= not btn;
-        --    wait for 200 ns;
+
+        --while not endfile(tests) loop
+        --	readline(tests, line_in);
+        --	read(line_in, a);
+        --	switch <= to_stdlogicvector(a);
+        --	wait for wait_time;
+        --	press_button(btn); -- to in_b
+        --	wait for wait_time;
+        --	read(line_in, b);
+        --	switch <= to_stdlogicvector(b);
+        --	wait for wait_time;
+        --	press_button(btn); --to add
+        --	wait for wait_time;
+        --	press_button(btn); --to diff
+        --	wait for wait_time;
+        --	press_button(btn); -- back to in_a
+        --	wait for wait_time;
         --end loop;
-        
-        --test_case("00000101", "00000010", switch); -- 5, 2
-        --test_case("00000010", "00000101", switch); -- 2, 5
-        --test_case("11001000", "01100100", switch); -- 200, 100
-        --test_case("01100100", "11001000", switch); -- 100, 200
 
-        
+        --file_close(tests);
 
+        --first test
+        switch <= "00000101";
+        wait for wait_time;
+        press_button(btn); -- to in_b
+        wait for wait_time;
+        switch <= "00000010";
+        wait for wait_time;
+        press_button(btn); -- to add
+        wait for wait_time;
+        press_button(btn); -- to sub
+        wait for wait_time;
+        press_button(btn); -- back to in_a
+
+        --second test
+        switch <= "00000010";
+        wait for wait_time;
+        press_button(btn); -- to in_b
+        wait for wait_time;
+        switch <= "00000101";
+        wait for wait_time;
+        press_button(btn); -- to add
+        wait for wait_time;
+        press_button(btn); -- to sub
+        wait for wait_time;
+        press_button(btn); -- back to in_a
+
+        --third test
+        switch <= "11001000";
+        wait for wait_time;
+        press_button(btn); -- to in_b
+        wait for wait_time;
+        switch <= "01100100";
+        wait for wait_time;
+        press_button(btn); -- to add
+        wait for wait_time;
+        press_button(btn); -- to sub
+        wait for wait_time;
+        press_button(btn); -- back to in_a
+
+        --fourth test
+        switch <= "01100100";
+        wait for wait_time;
+        press_button(btn); -- to in_b
+        wait for wait_time;
+        switch <= "11001000";
+        wait for wait_time;
+        press_button(btn); -- to add
+        wait for wait_time;
+        press_button(btn); -- to sub
+        wait for wait_time;
+        press_button(btn); -- back to in_a
         report "****************** sequential testbench stop ****************";
         wait;
   	end process; 
@@ -100,7 +160,6 @@ begin
 	    wait;
 	end process ; -- rst
 
-	
 
 	uut : top
 		port map (
