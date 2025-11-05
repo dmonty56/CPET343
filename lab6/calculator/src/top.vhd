@@ -13,6 +13,12 @@ entity calculator is
 end entity calculator;
 
 architecture arch of calculator is
+
+    constant read_w : std_logic_vector(2 downto 0) := "000"; -- read working register
+    constant write_w_no_op : std_logic_vector(2 downto 0) := "001"; -- write working register (just from input, no operation)
+    constant write_w : std_logic_vector(2 downto 0) := "010"; -- write working register
+    constant write_s : std_logic_vector(2 downto 0) := "011"; -- write save register
+    constant read_s : std_logic_vector(2 downto 0) := "100"; -- read save register
     
     signal result                  : std_logic_vector(7 downto 0);
     signal exe_sig, ms_sig, mr_sig : std_logic;
@@ -31,7 +37,16 @@ begin
         end if;
     end process ; -- state_register
 
-
+    state machine : process( switch_syn, state_reg, exe_sig, ms_sig, mr_sig )
+    begin
+        state_next <= state_reg;
+        case state_reg is
+            when read_w
+                
+            when others =>
+                state_next <= read_w;
+        end case;
+    end processs; -- state_machine
 
     d_d : double_dabble
         port map (
