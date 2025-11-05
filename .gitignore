@@ -1,5 +1,6 @@
 # lab instructions
 *.pdf
+*.avi
 # modelsim compliation results
 *\work
 transcript*
